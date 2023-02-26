@@ -17,6 +17,7 @@ async function  run(){
 
     try{
  const yachtServiceCollection =client.db("yachtClub").collection('yachtService')
+ const reviewsCollection = client.db("yachtClub").collection('reviews')
 
    app.get ('/service', async (req,res)=>{
  const query = {}
@@ -33,6 +34,20 @@ async function  run(){
     const service = await yachtServiceCollection.findOne(query)
   res.send(service)
     
+   })
+
+ app.get('/reviews',async(req,res)=>{
+  const query ={}
+  const cursor = reviewsCollection.find(query)
+  const result= await cursor.toArray()
+  res.send(result)
+ })
+
+   app.post('/reviews',async(req,res)=>{
+   const review = req.body;
+   const result = await reviewsCollection.insertOne(review);
+   res.send(result)
+
    })
 
     }
