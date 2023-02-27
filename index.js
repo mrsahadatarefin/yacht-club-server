@@ -24,8 +24,19 @@ async function  run(){
  const cursor =  yachtServiceCollection.find(query)
  const result = await cursor.toArray()
  res.send(result)
+ 
+
+
 
    });
+
+app.post('/service',async (req,res)=>{
+
+  const service = req.body;
+  const result = await yachtServiceCollection.insertOne(service)
+  res.send(result)
+})
+
    app.get('/service/:id',async (req,res)=>{
  
     const id = req.params.id;
@@ -41,6 +52,17 @@ async function  run(){
   const cursor = reviewsCollection.find(query)
   const result= await cursor.toArray()
   res.send(result)
+ })
+
+ app.get('/review',async(req,res)=>{
+
+  const name = req.query.name;
+  const query = { name:name}
+  
+  const review = await reviewsCollection.find(query).toArray()
+
+  res.send(review)
+
  })
 
    app.post('/reviews',async(req,res)=>{
